@@ -4,6 +4,7 @@
 	  <property name="bin" location="bin"/>
 	  <property name="dist" location="dist"/>
 	
+	<!--  Step 1: Import JaCoCo Ant tasks  -->
     <taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
         <classpath path="C:\Users\Anthony-Cleargoals\workspace\Test\lib\jacocoant.jar"/>
     </taskdef>
@@ -15,8 +16,11 @@
 		</javac>
 	</target>
 	
+
 	<target name="test" depends="compile">
 		<echo message="running code coverage"/>
+		
+		<!-- Wrap Junit test execution with the JaCoCo coverage task -->
 		<jacoco:coverage destfile="C:\Users\Anthony-Cleargoals\temp.exec">
 		    <junit fork="true">
 		        <classpath>
@@ -32,8 +36,9 @@
 	
 	<target name="exportCodeCoverage" depends="test">
 		<echo message="exporting code coverage"/>
-		<jacoco:report>
-		                        
+		
+		<!--  Create code coverage report  -->
+		<jacoco:report>                       
 		    <executiondata>
 		        <file file="C:\Users\Anthony-Cleargoals\temp.exec"/>
 		    </executiondata>
@@ -46,9 +51,13 @@
 		            <fileset dir="src"/>
 		        </sourcefiles-->
 		    </structure>
-		                       
+		        
+			<!--  Produce report in different formats (HTML, CSV, XML) -->
 		    <html destdir="report"/>
+			<!--csv destfile="report/report.csv"/-->
+			<!--xml destfile="report/report.xml"/-->
 			<echo message="report in HTML format is located in the project under 'report' directory in project folder"/>
+
 		</jacoco:report>
 	</target>
 		
